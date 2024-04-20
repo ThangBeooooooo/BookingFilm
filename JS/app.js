@@ -207,6 +207,7 @@ const ResizeHeader = () => {
             header.children[0].remove();
             header.append(brand, main_nav, right_nav);
         }
+        
     }
 };
 
