@@ -4,16 +4,17 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<form action="/BookingFilm.Controllers/AddFood" method="post" id="addFoodForm">
+<form action="/AdminAddFood/Create" method="post" id="addFoodForm">
     <label for="foodCode">Food Code:</label><br>
-    <input type="text" id="foodCode" name="foodCode"><br>
+    <input type="text" id="foodCode" name="MaDA"><br>
     <label for="foodName">Food Name:</label><br>
-    <input type="text" id="foodName" name="foodName"><br>
+    <input type="text" id="foodName" name="TenDA"><br>
     <label for="foodPrice">Food Price (VND)</label><br>
-    <input type="number" id="foodPrice" name="foodPrice" step="100" min="0"><br>
+    <input type="number" id="foodPrice" name="GiaDA" step="100" min="0"><br>
     <label for="foodImage">Food Image:</label><br>
-    <input type="file" id="foodImage" name="foodImage"><br>
+    <input type="file" id="foodImage" name="HinhDA"><br>
     <input type="submit" value="Add Food">
+    <a href="~/admin"></a>
 </form>
 <style>
     form {

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,31 +11,38 @@ namespace BookingFilm.Controllers
 {
     public class AdminAddFoodController : Controller
     {
+		private readonly BookingFilmTicketsEntities1 _context;
 		public ActionResult Index()
 		{
 			return View();
 		}
-		[HttpPost] // Đánh dấu action này chỉ xử lý yêu cầu POST
-		public ActionResult AddFood(DoAn doAn)
-		{
-			// Kiểm tra xem dữ liệu đã được nhập đầy đủ và hợp lệ không
-			if (ModelState.IsValid)
-			{
-				// Thực hiện lưu dữ liệu vào cơ sở dữ liệu, ở đây là một ví dụ đơn giản
-				// Code lưu vào cơ sở dữ liệu ở đây
-				// Ví dụ:
-				// DbContext.Add(doAn);
-				// DbContext.SaveChanges();
 
-				// Sau khi lưu thành công, bạn có thể chuyển hướng người dùng đến một trang thông báo thành công
-				return RedirectToAction("Success");
-			}
-			else
+		[HttpPost]
+
+		public ActionResult Create(FormCollection form, HttpPostedFileBase HinhDA)
+		{
+			using (var context = new BookingFilmTicketsEntities1())
 			{
-				// Nếu dữ liệu không hợp lệ, bạn có thể hiển thị lại form với thông báo lỗi
-				return View("Index", doAn);
+				var doAn = new DoAn
+				{
+					MaDA = form["MaDA"],
+					TenDA = form["TenDA"],
+					GiaDA = decimal.Parse(form["GiaDA"]),
+				};
+
+				if (HinhDA != null && HinhDA.ContentLength > 0)
+				{
+					var fileName = Path.GetFileName(HinhDA.FileName);
+					var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+					HinhDA.SaveAs(path);
+					doAn.HinhDA = fileName;
+				}
+
+				context.DoAns.Add(doAn);
+				context.SaveChanges();
+
+				return RedirectToAction("Index");
 			}
 		}
-
 	}
 }
