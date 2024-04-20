@@ -30,13 +30,18 @@ namespace BookingFilm.Controllers
 					GiaDA = decimal.Parse(form["GiaDA"]),
 				};
 
-				if (HinhDA != null && HinhDA.ContentLength > 0)
+				var fileName = Path.GetFileName(HinhDA.FileName);
+				var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+
+				// Create the directory if it doesn't exist
+				var directory = Path.GetDirectoryName(path);
+				if (!Directory.Exists(directory))
 				{
-					var fileName = Path.GetFileName(HinhDA.FileName);
-					var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
-					HinhDA.SaveAs(path);
-					doAn.HinhDA = fileName;
+					Directory.CreateDirectory(directory);
 				}
+
+				HinhDA.SaveAs(path);
+				doAn.HinhDA = fileName;
 
 				context.DoAns.Add(doAn);
 				context.SaveChanges();

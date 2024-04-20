@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Add Food";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<form action="/AdminAddFood/Create" method="post" id="addFoodForm">
+<form action="/AdminAddFood/Create" method="post" id="addFoodForm" enctype="multipart/form-data">
     <label for="foodCode">Food Code:</label><br>
     <input type="text" id="foodCode" name="MaDA"><br>
     <label for="foodName">Food Name:</label><br>

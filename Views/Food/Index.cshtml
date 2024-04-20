@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<BookingFilm.DoAn>
+
+
+
+<li class="dropdown">
+    <a href="@Url.Action("Index", "AdminAddFood")" class="dropbtn">
+        <i class="fas fa-hamburger"></i>
+        <span class="nav-item">Food</span>
+    </a>
+</li>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th id="action">Action</th>
+        </tr>
+    <thead>
+    <tbody>
+        @foreach (var doAn in Model)
+        {
+            <tr>
+                <td>@doAn.MaDA</td>
+                <td>@doAn.TenDA</td>
+                <td>@doAn.GiaDA</td>
+                <td><img src="~/Images/@doAn.HinhDA" alt="Image"></td>
+                <td><button>EDIT</button><button>REMOVE</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
