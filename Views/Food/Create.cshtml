@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Add Food";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<form action="/AdminAddFood/Create" method="post" id="addFoodForm" enctype="multipart/form-data">
+<form action="/Food/Create" method="post" id="addFoodForm" enctype="multipart/form-data">
     <label for="foodCode">Food Code:</label><br>
     <input type="text" id="foodCode" name="MaDA"><br>
     <label for="foodName">Food Name:</label><br>
@@ -24,6 +24,7 @@
         border-radius: 5px;
         background-color: #f8f8f8;
     }
+
     input {
         margin-top: -25px;
     }
@@ -53,9 +54,10 @@
         cursor: pointer;
     }
 
-    input[type="submit"]:hover {
+        input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
     label {
         display: block;
     }
