@@ -82,10 +82,10 @@ a:hover {
     background: #eee;
 }
 
-    a:hover i {
+a:hover i {
         color: #34AF6D;
         transition: 0.5s;
-    }
+}
 
 .logout {
     position: absolute;
@@ -209,7 +209,7 @@ table thead tr {
     font-weight: bold;
 }
 
-.table td button {
+.table td a {
     margin: 5px;
 }
 
@@ -239,19 +239,18 @@ table thead tr {
         border-bottom: 2px solid #4AD489;
     }
 
-.table button {
+.table a {
     padding: 6px 20px;
     border-radius: 10px;
     cursor: pointer;
     background: transparent;
-    border: 1px solid #4AD489;
+    border: 1px solid #ffffff;
 }
-
-    .table button:hover {
+.table a:hover {
         background: #4AD489;
         color: #fff;
         transition: 0.5rem;
-    }
+}
 
 .dropdown {
     position: relative;

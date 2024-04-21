@@ -1,9 +1,12 @@
-﻿using System;
+﻿using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace BookingFilm.Controllers
 {
@@ -27,37 +30,77 @@ namespace BookingFilm.Controllers
 			return View();
 		}
 
-		[HttpPost]
+		[Obsolete]
+		public string UrlImageAfterUpload(HttpPostedFileBase HinhAnh)
+		{
+			var account = new Account(
+						"dzamheemx",  // Cloud name
+						"279156174534789",  // API key
+						"KFQQWMyliAcvwK7vYvX__qEYstM"   // API secret
+					);
 
+			var cloudinary = new Cloudinary(account);
+
+			var uploadParams = new ImageUploadParams()
+			{
+				File = new FileDescription(Path.GetFileName(HinhAnh.FileName), HinhAnh.InputStream),
+				UploadPreset = "ml_default"  // Upload preset name
+			};
+
+			var uploadResult = cloudinary.Upload(uploadParams);
+			return uploadResult.SecureUri.AbsoluteUri;
+		}
+
+		[HttpPost]
+		[Obsolete]
 		public ActionResult Create(FormCollection form, HttpPostedFileBase HinhDA)
 		{
-			using (var context = new BookingFilmTicketsEntities1())
+			var doAn = new DoAn
 			{
-				var doAn = new DoAn
-				{
-					MaDA = form["MaDA"],
-					TenDA = form["TenDA"],
-					GiaDA = decimal.Parse(form["GiaDA"]),
-				};
+				MaDA = form["MaDA"],
+				TenDA = form["TenDA"],
+				GiaDA = decimal.Parse(form["GiaDA"]),
+				HinhDA = UrlImageAfterUpload(HinhDA)
+			};
 
-				var fileName = Path.GetFileName(HinhDA.FileName);
-				var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
-
-				// Create the directory if it doesn't exist
-				var directory = Path.GetDirectoryName(path);
-				if (!Directory.Exists(directory))
-				{
-					Directory.CreateDirectory(directory);
-				}
-
-				HinhDA.SaveAs(path);
-				doAn.HinhDA = fileName;
-
-				context.DoAns.Add(doAn);
-				context.SaveChanges();
-
-				return RedirectToAction("Index");
-			}
+			_context.DoAns.Add(doAn);
+			_context.SaveChanges();
+			return RedirectToAction("Index");
 		}
+		// GET: Food/Delete/BAPPHOMAI
+		public ActionResult Delete(string id)
+		{
+			var doAn = _context.DoAns.Find(id);
+			if (doAn == null)
+			{
+				return HttpNotFound();
+			}
+
+			_context.DoAns.Remove(doAn);
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+
+		//// GET: Food/Delete/BAPPHOMAI
+		//public ActionResult Delete(string id)
+		//{
+		//	var doAn = _context.DoAns.Find(id);
+		//	if (doAn == null)
+		//	{
+		//		return HttpNotFound();
+		//	}
+		//	return View(doAn);
+		//}
+
+		//// POST: Food/Delete/BAPPHOMAI
+		//[HttpPost]
+		//public ActionResult DeleteConfirmed(string id)
+		//{
+		//	var doAn = _context.DoAns.Find(id);
+		//	_context.DoAns.Remove(doAn);
+		//	_context.SaveChanges();
+		//	return RedirectToAction("Index");
+		//}
 	}
 }
