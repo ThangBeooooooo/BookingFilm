@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace BookingFilm.Controllers
 {
@@ -31,6 +32,11 @@ namespace BookingFilm.Controllers
 			}).ToList();
 
 			return Json(cards, JsonRequestBehavior.AllowGet);
+		}
+		public ActionResult Logout()
+		{
+			Session["User"] = null; // Xóa người dùng khỏi phiên
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }

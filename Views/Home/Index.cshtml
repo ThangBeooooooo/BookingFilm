@@ -50,9 +50,14 @@
 
                 @if (Model != null)
                 {
-                    <a href="#">
+                    <a href="#" style="margin: 0px 10px;">
                         <div class="button-container login">
                             <h2>@Model.HoTenKH</h2>
+                        </div>
+                    </a>
+                    <a href="@Url.Action("Logout", "Home")">
+                        <div class="button-container login">
+                            <h2>Log Out</h2>
                         </div>
                     </a>
                 }

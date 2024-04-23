@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -40,5 +41,26 @@ namespace BookingFilm.Controllers
 			}
 		}
 
+		[HttpPost]
+		public ActionResult CreateAccount(KhachHang user)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.KhachHangs.Add(user);
+				_context.SaveChanges();
+				TempData["SuccessMessage"] = "Sign Up Success!";
+				return RedirectToAction("Index");
+			}
+
+			return View(user);
+		}
+
+		[HttpGet]
+		public JsonResult CheckExists(string cccd, string email)
+		{
+			bool cccdExists = _context.KhachHangs.Any(kh => kh.CCCD == cccd);
+			bool emailExists = _context.KhachHangs.Any(kh => kh.Email == email);
+			return Json(new { cccdExists = cccdExists, emailExists = emailExists }, JsonRequestBehavior.AllowGet);
+		}
 	}
 }
