@@ -16,8 +16,10 @@ namespace BookingFilm.Controllers
 		// GET: Home
 		public ActionResult Index()
 		{
-			return View();
+			var user = Session["User"] as KhachHang; // Lấy user từ Session
+			return View(user);
 		}
+
 		public ActionResult GetMovies()
 		{
 			var cards = _context.Phims.Select(c => new

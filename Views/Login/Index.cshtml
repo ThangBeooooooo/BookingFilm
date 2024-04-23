@@ -29,11 +29,17 @@
                 <input type="text" placeholder="CCCD" pattern="\d{12}" title="Vui lòng nhập vào 12 số">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
+                <input type="address" placeholder="Address">
+                <select name="gender" id="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
                 <button>Sign Up</button>
             </form>
         </div>
-        <div class="form-container sign-in">
-            <form>
+        <div>
+            <form class="form-container sign-in" action="/Login/Index" method="post">
                 <h1>Sign In</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -42,12 +48,25 @@
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your email password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input type="email" name="Email" placeholder="Email">
+                <input type="password" name="MatKhauKH" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
                 <button>Sign In</button>
+
             </form>
         </div>
+        <script>
+        window.onload = function() {
+                var message = '@TempData["Message"]';
+                if (message) {
+                    alert(message);
+                    setTimeout(function() {
+                        document.querySelector(".alert").remove();
+                    }, 1000);
+                 }
+            };
+
+        </script>
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
