@@ -29,7 +29,7 @@
                 <td ><img  src="@doAn.HinhDA"  style="width:100px; height:100px;" alt="Image"></td>
 
                 <td>
-                    <a style="display: inline !important;">EDIT</a>
+                    <a href="@Url.Action("Edit", "Food", new { id = doAn.MaDA })" style="display: inline !important;">EDIT</a>
                     <a href="@Url.Action("Delete", "Food", new { id = doAn.MaDA })" style="display: inline !important;" onclick="return confirm('Are you sure you want to delete this item?');" >REMOVE</a>
                 </td>
             </tr>

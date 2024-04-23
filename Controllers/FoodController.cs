@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.Net;
 
 
 namespace BookingFilm.Controllers
@@ -52,32 +54,24 @@ namespace BookingFilm.Controllers
 		}
 
 		[HttpPost]
-		[Obsolete]
-		public ActionResult Create(FormCollection form, HttpPostedFileBase HinhDA)
+		[ValidateAntiForgeryToken]
+		public ActionResult Create([Bind(Include = "MaDA,TenDA,GiaDA,HinhDA")] DoAn doAn,HttpPostedFileBase HinhDA)
 		{
-			var maDA = form["MaDA"];
-
-			// Kiểm tra xem ID đã tồn tại hay chưa
-			var existingDoAn = _context.DoAns.FirstOrDefault(d => d.MaDA == maDA);
-			if (existingDoAn != null)
+			if (ModelState.IsValid)
 			{
-				ViewBag.AlertMessage = "This MaDA already exists.";
-				// Trả về view Create với ModelState chứa thông báo lỗi
-				return View("Create");
+				// Kiểm tra xem mã đồ ăn đã tồn tại chưa
+				if (_context.DoAns.Any(da => da.MaDA == doAn.MaDA))
+				{
+					ModelState.AddModelError("MaDA", "Mã đồ ăn đã tồn tại");
+					return View(doAn);
+				}
+				doAn.HinhDA = UrlImageAfterUpload(HinhDA);	
+				_context.DoAns.Add(doAn);
+				_context.SaveChanges();
+				return RedirectToAction("Index");
 			}
 
-			// Nếu ID chưa tồn tại, tiếp tục thêm đồ ăn mới
-			var doAn = new DoAn
-			{
-				MaDA = maDA,
-				TenDA = form["TenDA"],
-				GiaDA = decimal.Parse(form["GiaDA"]),
-				HinhDA = UrlImageAfterUpload(HinhDA)
-			};
-
-			_context.DoAns.Add(doAn);
-			_context.SaveChanges();
-			return RedirectToAction("Index");
+			return View(doAn);
 		}
 		// GET: Food/Delete/BAPPHOMAI
 		public ActionResult Delete(string id)
@@ -93,7 +87,33 @@ namespace BookingFilm.Controllers
 			return RedirectToAction("Index");
 		}
 
+		public ActionResult Edit(string id)
+		{
+			DoAn doAn = _context.DoAns.Find(id);
+			if (doAn == null)
+			{
+				return HttpNotFound();
+			}
+			return View(doAn);
+		}
 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit([Bind(Include = "MaDA,TenDA,GiaDA,HinhDA")] DoAn doAn)
+		{
+			if (ModelState.IsValid)
+			{
+				if (_context.DoAns.Any(da => da.MaDA == doAn.MaDA))
+				{
+					ModelState.AddModelError("MaDA", "The food code already exists");
+					return View(doAn);
+				}
+				_context.Entry(doAn).State = EntityState.Modified;
+				_context.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(doAn);
+		}
 		//// GET: Food/Delete/BAPPHOMAI
 		//public ActionResult Delete(string id)
 		//{

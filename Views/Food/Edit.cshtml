@@ -1,36 +1,32 @@
-﻿
+﻿@model BookingFilm.DoAn
+
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@model BookingFilm.DoAn
 
-@using (Html.BeginForm("Create", "Food", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<h2>Edit Food</h2>
+
+@using (Html.BeginForm("Edit", "Food", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Create Food</h4>
-    <hr />
-    <label for="MaDA">Food Code:</label><br>
-    @Html.TextBoxFor(model => model.MaDA, new { id = "MaDA" })<br>
+    <label for="TenDA">Food Code:</label><br>
+    @Html.TextBoxFor(model => model.MaDA)
     @Html.ValidationMessageFor(model => model.MaDA, "", new { @class = "text-danger" })<br>
     <label for="TenDA">Food Name:</label><br>
     @Html.TextBoxFor(model => model.TenDA, new { id = "TenDA" })<br>
 
     <label for="GiaDA">Food Price (VND)</label><br>
-    @Html.TextBoxFor(model => model.GiaDA, new { id = "GiaDA", type = "number", step = "100" })<br>
+    @Html.TextBoxFor(model => model.GiaDA, new { id = "GiaDA", type = "number", step = "0.01" })<br>
 
     <label for="HinhDA">Food Image:</label><br>
-    <input type="file" id="foodImage" name="HinhDA" required><br>
+    <input type="file" name="HinhDA" id="HinhDA" required/><br>
 
-    <input type="submit" value="Create">
+    <input type="submit" value="Save Changes">
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 <style>
     h1, h2, h3, h4, h5, h6 {
         margin: 0;

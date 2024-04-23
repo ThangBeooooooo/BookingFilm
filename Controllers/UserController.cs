@@ -41,18 +41,6 @@ namespace BookingFilm.Controllers
 			return View();
 		}
 
-		//[HttpPost]
-		//public ActionResult Create(KhachHang khachHang)
-		//{
-		//	if (ModelState.IsValid)
-		//	{
-		//		_context.KhachHangs.Add(khachHang);
-		//		_context.SaveChanges();
-		//		return RedirectToAction("Index");
-		//	}
-
-		//	return View(khachHang);
-		//}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
