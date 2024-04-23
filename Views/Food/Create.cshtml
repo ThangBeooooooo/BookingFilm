@@ -4,6 +4,17 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+
+
+@if (ViewBag.AlertMessage != null)
+{
+    <script>
+        // Sử dụng JavaScript để hiển thị alert với nội dung từ ViewBag
+        alert('@ViewBag.AlertMessage');
+    </script>
+}
+
+
 <form action="/Food/Create" method="post" id="addFoodForm" enctype="multipart/form-data">
     <label for="foodCode">Food Code:</label><br>
     <input type="text" id="foodCode" name="MaDA"><br>

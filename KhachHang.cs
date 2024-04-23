@@ -11,25 +11,39 @@ namespace BookingFilm
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class KhachHang
-    {
+	using System.ComponentModel.DataAnnotations;
+
+	public partial class KhachHang
+	{
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public KhachHang()
-        {
-            this.DatVes = new HashSet<DatVe>();
-        }
-    
-        public int MaKH { get; set; }
-        public string HoTenKH { get; set; }
-        public string Email { get; set; }
-        public string MatKhauKH { get; set; }
-        public System.DateTime NgaySinh { get; set; }
-        public bool GioiTinh { get; set; }
-        public string CCCD { get; set; }
-        public string DiaChi { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DatVe> DatVes { get; set; }
+    public KhachHang()
+    {
+        this.DatVes = new HashSet<DatVe>();
     }
+
+    public int MaKH { get; set; }
+
+    public string HoTenKH { get; set; }
+
+    [Required]
+    [EmailAddress(ErrorMessage = "Invalid Email Address")]
+    public string Email { get; set; }
+
+	[Required(ErrorMessage = "The Pass field is required.")]
+	public string MatKhauKH { get; set; }
+
+    public System.DateTime NgaySinh { get; set; }
+
+    public bool GioiTinh { get; set; }
+
+    [Required]
+    [StringLength(12, MinimumLength = 12, ErrorMessage = "CCCD must be 12 digits.")]
+    [RegularExpression("^[0-9]*$", ErrorMessage = "CCCD must be numeric.")]
+    public string CCCD { get; set; }
+
+    public string DiaChi { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<DatVe> DatVes { get; set; }
+	}
 }

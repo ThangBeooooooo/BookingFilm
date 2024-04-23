@@ -55,9 +55,21 @@ namespace BookingFilm.Controllers
 		[Obsolete]
 		public ActionResult Create(FormCollection form, HttpPostedFileBase HinhDA)
 		{
+			var maDA = form["MaDA"];
+
+			// Kiểm tra xem ID đã tồn tại hay chưa
+			var existingDoAn = _context.DoAns.FirstOrDefault(d => d.MaDA == maDA);
+			if (existingDoAn != null)
+			{
+				ViewBag.AlertMessage = "This MaDA already exists.";
+				// Trả về view Create với ModelState chứa thông báo lỗi
+				return View("Create");
+			}
+
+			// Nếu ID chưa tồn tại, tiếp tục thêm đồ ăn mới
 			var doAn = new DoAn
 			{
-				MaDA = form["MaDA"],
+				MaDA = maDA,
 				TenDA = form["TenDA"],
 				GiaDA = decimal.Parse(form["GiaDA"]),
 				HinhDA = UrlImageAfterUpload(HinhDA)
