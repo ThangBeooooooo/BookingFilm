@@ -81,26 +81,49 @@ namespace BookingFilm.Controllers
 			return RedirectToAction("Index");
 		}
 
+        public ActionResult Edit(string id)
+		{
+            DoAn doAn = _context.DoAns.Find(id);
+            //DoAn doAn= _context.DoAns.Where(row => row.MaDA == id).FirstOrDefault();
+            return View(doAn);
 
-		//// GET: Food/Delete/BAPPHOMAI
-		//public ActionResult Delete(string id)
-		//{
-		//	var doAn = _context.DoAns.Find(id);
-		//	if (doAn == null)
-		//	{
-		//		return HttpNotFound();
-		//	}
-		//	return View(doAn);
-		//}
+        }
+        [HttpPost]
+        [Obsolete]
+        public ActionResult Edit(DoAn da, HttpPostedFileBase HinhDA)
+        {
+            DoAn doAn = _context.DoAns.Find(da.MaDA);
+            //DoAn doAn = _context.DoAns.Where(row => row.MaDA == da.MaDA).FirstOrDefault();
 
-		//// POST: Food/Delete/BAPPHOMAI
-		//[HttpPost]
-		//public ActionResult DeleteConfirmed(string id)
-		//{
-		//	var doAn = _context.DoAns.Find(id);
-		//	_context.DoAns.Remove(doAn);
-		//	_context.SaveChanges();
-		//	return RedirectToAction("Index");
-		//}
-	}
+            doAn.TenDA = da.TenDA;
+			doAn.GiaDA = da.GiaDA;
+
+			doAn.HinhDA = UrlImageAfterUpload(HinhDA);
+
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+        //// GET: Food/Delete/BAPPHOMAI
+        //public ActionResult Delete(string id)
+        //{
+        //	var doAn = _context.DoAns.Find(id);
+        //	if (doAn == null)
+        //	{
+        //		return HttpNotFound();
+        //	}
+        //	return View(doAn);
+        //}
+
+        //// POST: Food/Delete/BAPPHOMAI
+        //[HttpPost]
+        //public ActionResult DeleteConfirmed(string id)
+        //{
+        //	var doAn = _context.DoAns.Find(id);
+        //	_context.DoAns.Remove(doAn);
+        //	_context.SaveChanges();
+        //	return RedirectToAction("Index");
+        //}
+    }
 }
